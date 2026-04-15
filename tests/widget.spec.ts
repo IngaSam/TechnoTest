@@ -37,4 +37,24 @@ test.describe('Uchi.ru widget ', () => {
 
     expect(title).toEqual('Связь с поддержкой');
   });
+
+  test('popular articles are visible and clickable', async ({ page }) => {
+    await widgetPage.openWidget();
+
+    const articles = await widgetPage.getPopularArticles();
+
+    // Проверяем количество статей
+    expect(articles.length).toBeGreaterThanOrEqual(3);
+
+    // Проверяем, что все статьи видимы
+    for (let i = 0; i < articles.length; i++) {
+      await expect(articles[i]).toBeVisible();
+    }
+
+    // Проверяем, что первая статья существует и имеет текст
+    const articleText = await articles[0].textContent();
+    expect(articleText).not.toBeNull();
+    expect(articleText?.length).toBeGreaterThan(0);
+  });
+
 });
