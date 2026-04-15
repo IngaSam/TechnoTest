@@ -25,10 +25,16 @@ test.describe('Uchi.ru widget ', () => {
 
     const articles = await widgetPage.getPopularArticles();
 
+    // Проверяем, что статьи загрузились
+    expect(articles.length).toBeGreaterThan(0);
+
     await articles[0].click();
 
     await widgetPage.clickWriteToUs();
 
-    expect(await widgetPage.getTitle()).toEqual('Связь с поддержкой');
+    // Проверяем заголовок
+    const title = await widgetPage.getTitle();
+
+    expect(title).toEqual('Связь с поддержкой');
   });
 });
